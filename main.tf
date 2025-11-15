@@ -35,7 +35,7 @@ resource "aws_instance" "main" {
 #Provisoning the services into the instance
 resource "terraform_data" "main" {
   triggers_replace = [
-    aws_instance.main.id
+    aws_instance.main.id  #It will trigger once the instance is created succesfully
   ]
   
   provisioner "file" {
@@ -81,7 +81,7 @@ resource "aws_ami_from_instance" "main" {
 #Delete the instance 
 resource "terraform_data" "main_delete" {
   triggers_replace = [
-    aws_instance.main.id
+    aws_instance.main.id 
   ]
   
   # make sure you have aws CLI configure in your laptop. localexec because instance already stopped and no use
@@ -112,7 +112,7 @@ resource "aws_launch_template" "main" {
     )
   }
 
-  # volume tags created by ASG
+  # volume tags created by instance
   tag_specifications {
     resource_type = "volume"
 
